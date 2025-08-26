@@ -25,7 +25,7 @@ def create_tables(conn):
     );
     """)
 
-    # FactSales table for transactional sales data
+    # FactSales table for sales and revenue data
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS FactSales (
         OrderID TEXT PRIMARY KEY,

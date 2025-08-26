@@ -5,10 +5,6 @@ from db import db, create_tables, insert_product, insert_sales
 orders = pd.read_csv("data/orders.csv")
 products = pd.read_csv("data/products.csv")
 
-# Test logs
-# print(orders.head())
-# print(products.head())
-
 # Calculate revenue
 orders["Revenue"] = orders["Quantity"] * orders["Price"]
 
@@ -16,12 +12,18 @@ orders["Revenue"] = orders["Quantity"] * orders["Price"]
 orders["OrderYear"] = pd.to_datetime(orders["OrderDate"]).dt.year
 orders["OrderMonth"] = pd.to_datetime(orders["OrderDate"]).dt.month
 orders["OrderDay"] = pd.to_datetime(orders["OrderDate"]).dt.day
-orders["OrderDate"] = pd.to_datetime(orders["OrderDate"])
+
+# Merge orders and products
+orders = pd.merge(orders, products, on="ProductID", how="left")
+
+# Test logs
+print(orders.head())
+print(products.head())
 
 # Connect to db
 conn = db()
 
-# Start with a clean slate by dropping existing tables
+# Clean db by dropping existing tables to prevent duplicates
 cursor = conn.cursor()
 cursor.execute("DROP TABLE IF EXISTS FactSales")
 cursor.execute("DROP TABLE IF EXISTS DimDate")
@@ -60,7 +62,7 @@ for _, row in orders.iterrows():
 
     date_mapping[(row["OrderYear"], row["OrderMonth"], row["OrderDay"])] = date_id
 
-# Insert sales data
+# Insert sales and revenue data
 sales_data = []
 for _, row in orders.iterrows():
     date_id = date_mapping[(row["OrderYear"], row["OrderMonth"], row["OrderDay"])]
