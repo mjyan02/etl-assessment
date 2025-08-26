@@ -121,7 +121,7 @@ python src/query.py
 
 ---
 
-## Dashboard Use Case
+## Dashboarding Use Case
 
 This data model is suitable for dashboarding because **FactSales** acts as the central fact table, containing measurable metrics such as Revenue. This allows for **efficient data aggregation** and **filtering** based on dimensions such as product category or time.
 
