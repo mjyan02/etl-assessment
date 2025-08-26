@@ -20,14 +20,15 @@ def create_tables(conn):
         DateID INTEGER PRIMARY KEY AUTOINCREMENT,
         OrderYear INTEGER,
         OrderMonth INTEGER,
-        OrderDay INTEGER
+        OrderDay INTEGER,
+        UNIQUE(OrderYear, OrderMonth, OrderDay)
     );
     """)
 
     # FactSales table for transactional sales data
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS FactSales (
-        OrderID INTEGER PRIMARY KEY,
+        OrderID TEXT PRIMARY KEY,
         CustomerID TEXT,
         Revenue REAL,
         ProductID TEXT,
@@ -37,7 +38,6 @@ def create_tables(conn):
     );
     """)
 
-    # Commit the changes
     conn.commit()
 
 
@@ -45,9 +45,9 @@ def insert_product(conn, product_data):
     cursor = conn.cursor()
     cursor.executemany(
         """
-    INSERT INTO DimProduct (ProductID, ProductName, Category, Cost)
-    VALUES (?, ?, ?, ?)
-    """,
+        INSERT OR REPLACE INTO DimProduct (ProductID, ProductName, Category, Cost)
+        VALUES (?, ?, ?, ?)
+        """,
         product_data,
     )
     conn.commit()
@@ -57,9 +57,9 @@ def insert_date(conn, date_data):
     cursor = conn.cursor()
     cursor.executemany(
         """
-    INSERT INTO DimDate (OrderYear, OrderMonth, OrderDay)
-    VALUES (?, ?, ?)
-    """,
+        INSERT OR IGNORE INTO DimDate (OrderYear, OrderMonth, OrderDay)
+        VALUES (?, ?, ?)
+        """,
         date_data,
     )
     conn.commit()
@@ -69,9 +69,9 @@ def insert_sales(conn, sales_data):
     cursor = conn.cursor()
     cursor.executemany(
         """
-    INSERT INTO FactSales (OrderID, CustomerID, Revenue, ProductID, DateID)
-    VALUES (?, ?, ?, ?, ?)
-    """,
+        INSERT INTO FactSales (OrderID, CustomerID, Revenue, ProductID, DateID)
+        VALUES (?, ?, ?, ?, ?)
+        """,
         sales_data,
     )
     conn.commit()
