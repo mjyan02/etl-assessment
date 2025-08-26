@@ -4,7 +4,7 @@ import pandas as pd
 orders = pd.read_csv("data/orders.csv")
 products = pd.read_csv("data/products.csv")
 
-# Test log
+# Test logs
 print(orders.head())
 print(products.head())
 
@@ -16,5 +16,5 @@ orders["OrderYear"] = pd.to_datetime(orders["OrderDate"]).dt.year
 orders["OrderMonth"] = pd.to_datetime(orders["OrderDate"]).dt.month
 orders["OrderDay"] = pd.to_datetime(orders["OrderDate"]).dt.day
 
-# Test log
+# Test logs
 print(orders.head())
