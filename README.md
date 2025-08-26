@@ -1,6 +1,6 @@
 # Case Study: Sales Data Transformation for Analytical Reporting
 
-This repository contains the implementation of an **ETL pipeline** that processes mock data from CSV files, transforms it, and loads it into an **SQLite database** following a simple **star schema**. The **FactSales**, **DimProduct**, and **DimDate** tables are created to allow for efficient querying and analysis of sales data to evaluate performance.
+This repository contains the implementation of an **ETL pipeline** that processes data from CSV files, transforms it, and loads it into an **SQLite database** following a simple **star schema**. The **FactSales**, **DimProduct**, and **DimDate** tables are created to allow for efficient querying and analysis of sales data to evaluate performance.
 
 ## Table of Contents
 
@@ -9,7 +9,7 @@ This repository contains the implementation of an **ETL pipeline** that processe
 3. [SQL Query (Task 3)](#sql-query)
 4. [Dashboarding Use Case (Task 4)](#dashboarding-use-case)
 
-### Set Up 🤩
+### Set Up
 
 1. Pre-requisites: Ensure **Python 3.6** or above is installed
 2. Clone this repo
@@ -113,7 +113,7 @@ ORDER BY
     p.Category, d.OrderYear, d.OrderMonth;
 ```
 
-This query can also be run using the `query.py` script in `src`:
+This query can also be run using the `query.py` script in `src` (See [Setup Instructions](#set-up)):
 
 ```
 python src/query.py
@@ -122,3 +122,27 @@ python src/query.py
 ---
 
 ## Dashboard Use Case
+
+This data model is suitable for dashboarding because **FactSales** acts as the central fact table, containing measurable metrics such as Revenue. This allows for **efficient data aggregation** and **filtering** based on dimensions such as product category or time.
+
+By organizing the data into separate tables (i.e., FactSales, DimProduct, and DimDate), the data is **segregated** and **categorized**. This allows for efficient analysis and also facilitates **scalability** as more data is added. For instance, if there are new product categories or time periods, they can be added directly without needing to redesign the database schema.
+
+### Three Key Metrics/Visualizations
+
+#### 1. **Total Revenue by Product Category and Month:**
+
+- **Importance**: This metric helps busineses understand how different product categories are performing over different months, enabling them to adjust inventory, marketing, and promotions accordingly.
+- **Visualization**: A line graph showing the revenue trend for each category across multiple months.
+- **Use Case**: Identifies seasonal trends for different product categories.
+
+#### 2. **Total Sales by Customer:**
+
+- **Importance**: This metric shows which customers are contributing the most revenue, helping businesses identify high-value clients and develop customer retention strategies.
+- **Visualization**: A pie chart displaying customers with their total revenue contributions.
+- **Use Case**: Identifies top customers for special offers or personalized services.
+
+#### 3. **Total Revenue by Product Over Time:**
+
+- **Importance**: This metric tracks how individual products are performing over time, providing insights on whether to push certain products more or reduce their availability.
+- **Visualization**: A line chart displaying revenue for individual products over time (e.g. monthly, quarterly).
+- **Use Case**: Identifies which products are consistently selling well and which ones need more attention.
