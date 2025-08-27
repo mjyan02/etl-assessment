@@ -17,8 +17,8 @@ orders["OrderDay"] = pd.to_datetime(orders["OrderDate"]).dt.day
 orders = pd.merge(orders, products, on="ProductID", how="left")
 
 # Test logs
-print(orders.head())
-print(products.head())
+# print(orders.head())
+# print(products.head())
 
 # Connect to db
 conn = db()

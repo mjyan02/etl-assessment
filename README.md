@@ -39,7 +39,7 @@ This repository contains the implementation of an **ETL pipeline** that processe
    pip install -r requirements.txt
    ```
 
-7. Place CSV files (if any is needed) inside the `data` folder
+7. Place CSV files (if needed) inside the `data` folder
 
 8. Run the ETL script to load data into the SQLite database:
 
